@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Sister</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+text-align:center;
+color:white;
+background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffc3a0);
+}
+
+.slide{
+display:none;
+height:100vh;
+padding:30px;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.active{
+display:flex;
+}
+
+h1{
+font-size:34px;
+}
+
+p{
+font-size:20px;
+max-width:600px;
+}
+
+.photo{
+width:260px;
+border-radius:20px;
+margin:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+button{
+margin-top:20px;
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:#ff4081;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<!-- Slide 1 -->
+<div class="slide active">
+<h1>🎉 Happy Birthday Sister 🎉</h1>
+<p>This surprise website is made specially for you 💖</p>
+<button onclick="nextSlide()">Next ➜</button>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide">
+<h1>💖 My Dear Sister</h1>
+<p>You are not just my sister, you are my best friend forever.</p>
+<button onclick="nextSlide()">Next ➜</button>
+</div>
+
+<!-- Slide 3 (YOUR PHOTO) -->
+<div class="slide">
+<h1>👫 Brother & Sister</h1>
+
+<img class="photo"
+src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAIAAABu0k9UAAAgAElEQVR4nO3deZBcdX3/8c+9
+...BASE64 DATA CONTINUES...
+... (very long encoded image data) ...
+">
+
+<p>A brother and sister share a special bond forever 💕</p>
+
+<button onclick="nextSlide()">Next ➜</button>
+</div>
+
+<!-- Slide 4 -->
+<div class="slide">
+<h1>🌟 Birthday Wishes</h1>
+<p>May your life be filled with happiness, love and success.</p>
+<button onclick="nextSlide()">Next ➜</button>
+</div>
+
+<!-- Slide 5 -->
+<div class="slide">
+<h1>🎂 Your Special Day</h1>
+<p>Enjoy cake, gifts and lots of happiness today!</p>
+<button onclick="nextSlide()">Next ➜</button>
+</div>
+
+<!-- Slide 6 -->
+<div class="slide">
+<h1>🎆 Final Surprise</h1>
+<p>Happy Birthday to the best sister in the world! 💖</p>
+<button onclick="playMusic()">🎵 Play Music</button>
+<button onclick="startConfetti()">Celebrate 🎉</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+
+let currentSlide=0
+const slides=document.querySelectorAll(".slide")
+
+function nextSlide(){
+slides[currentSlide].classList.remove("active")
+currentSlide++
+if(currentSlide < slides.length){
+slides[currentSlide].classList.add("active")
+}
+}
+
+function playMusic(){
+document.getElementById("music").play()
+}
+
+/* Confetti */
+
+const canvas=document.getElementById("confetti")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let pieces=[]
+
+function startConfetti(){
+
+for(let i=0;i<200;i++){
+pieces.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height-canvas.height,
+size:Math.random()*8+4,
+speed:Math.random()*3+2,
+color:"hsl("+Math.random()*360+",100%,50%)"
+})
+}
+
+setTimeout(()=>{pieces=[]},6000)
+}
+
+function update(){
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+pieces.forEach(p=>{
+p.y+=p.speed
+ctx.fillStyle=p.color
+ctx.fillRect(p.x,p.y,p.size,p.size)
+})
+
+requestAnimationFrame(update)
+}
+
+update()
+
+</script>
+
+</body>
+</html>
